@@ -7,10 +7,12 @@ packages = [
   { include = "gendiff" },
 ]
 
+
 [tool.poetry.dependencies]
 python = "^3.9"
 
 [tool.poetry.dev-dependencies]
+
 
 [tool.poetry.scripts]
 gendiff = "gendiff.scripts.gendiff:main"
