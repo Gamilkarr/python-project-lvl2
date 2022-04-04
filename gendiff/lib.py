@@ -1,4 +1,6 @@
 import json
+import yaml
+
 
 NEW = "+"
 OLD = "-"
@@ -15,7 +17,7 @@ def convert(element):
     return element
 
 
-def render(diff):
+def format(diff):
     result = []
 
     for key in sorted(diff.keys()):
@@ -47,8 +49,18 @@ def diff(object, new_object):
 
 def generate_diff(file_path_1, file_path_2):
 
-    with open(file_path_1) as f1, open(file_path_2) as f2:
-        file_1 = json.load(f1)
-        file_2 = json.load(f2)
+    data_1 = open_file(file_path_1)
+    data_2 = open_file(file_path_2)
+    data_diff = diff(data_1, data_2)
 
-    return render(diff(file_1, file_2))
+    return format(data_diff)
+
+
+def open_file(file_path):
+    extension = file_path.split(".")[-1]
+    with open(file_path) as f:
+        if extension == "json":
+            file = json.load(f)
+        elif extension == "yaml" or extension == "yml":
+            file = yaml.safe_load(f)
+    return file
