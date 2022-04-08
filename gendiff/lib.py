@@ -1,5 +1,4 @@
-import json
-import yaml
+import parse
 
 
 NEW = "+"
@@ -49,18 +48,8 @@ def diff(object, new_object):
 
 def generate_diff(file_path_1, file_path_2):
 
-    data_1 = open_file(file_path_1)
-    data_2 = open_file(file_path_2)
+    data_1 = parse.open_file(file_path_1)
+    data_2 = parse.open_file(file_path_2)
     data_diff = diff(data_1, data_2)
 
     return format(data_diff)
-
-
-def open_file(file_path):
-    extension = file_path.split(".")[-1]
-    with open(file_path) as f:
-        if extension == "json":
-            file = json.load(f)
-        elif extension == "yaml" or extension == "yml":
-            file = yaml.safe_load(f)
-    return file
